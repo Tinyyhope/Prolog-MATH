@@ -39,15 +39,16 @@ pip install -r requirements.txt
 
 ## 🚀 How to Run
 
-This repository provides a **two-stage training pipeline**:
-(1) *Supervised Fine-Tuning (SFT)* → (2) *Reinforcement Learning with GRPO*.
-Each stage can be run independently with your own API and dataset paths.
+This repository provides a two-stage prompting-based pipeline followed by reinforcement learning exploration.
+The first stage performs predicate-guided data generation via few-shot prompting to automatically construct verifiable symbolic reasoning examples.
+The second stage refines model behavior through Reinforcement Learning with GRPO (Group Relative Policy Optimization), using predicate-aware rewards to encourage both correctness and structural generalization.
+All components can be run independently with your own API endpoints, dataset paths, and model checkpoints.
 
 ---
 
-### Stage 1 — Predicate-Guided Generation
+### Predicate-Guided Generation
 
-This step constructs the **Prolog-MATH dataset** by combining model-predicted predicates with verified Prolog programs.
+This step constructs 81.3% of  **Prolog-MATH dataset** by combining model-predicted predicates with verified Prolog programs.
 
 #### Predicate Suggestion
 
@@ -65,7 +66,7 @@ Once predicates are extracted, use another LLM to assemble and verify complete P
 Run the full code generation script:
 
 <pre><code class="language-bash">
-python Pipeline/full_prolog_generation.py \
+python Pipeline/full_prolog_generation.py 
 </code></pre>
 
 ---
@@ -84,7 +85,7 @@ llamafactory-cli train SFT/prolog_qwen_3b_full_data.yaml
 
 #### 2. Reinforcement Learning with GRPO 🚀
 
-To boost coverage, the final model is trained using **GRPO** (Group Relative Policy Optimization), an on-policy RL algorithm, implemented with the **[TRL](https://github.com/huggingface/trl)** library and optimized for efficiency using **[Unsloth](https://github.com/unslothai/unsloth)**.
+To further enhance reasoning coverage and generalization, the final model is trained using **GRPO** (Group Relative Policy Optimization), an on-policy RL algorithm, implemented with the **[TRL](https://github.com/huggingface/trl)** library and optimized for efficiency using **[Unsloth](https://github.com/unslothai/unsloth)**.
 
 This setup allows the entire GRPO training run to be executed on a **single consumer-grade GPU** (e.g., RTX 4090 with 24 GB VRAM).
 
@@ -98,7 +99,7 @@ You can launch the GRPO training using one of the following two settings:
 **Run GRPO (Example using Predicate-Aware Reward):**
 
 <pre><code class="language-bash">
-python GRPO/train_grpo_partial_vllm.py \
+python GRPO/train_grpo_partial_vllm.py 
 </code></pre>
 
 ---
