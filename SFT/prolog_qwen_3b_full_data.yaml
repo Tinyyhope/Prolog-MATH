@@ -1,0 +1,48 @@
+---
+### model
+ # TODO: Your model path here
+model_name_or_path: None
+quantization_bit: 4
+trust_remote_code: true
+
+### method
+stage: sft
+do_train: true
+do_eval: true
+finetuning_type: lora
+lora_rank: 32
+lora_target: all
+use_rslora: true
+use_unsloth: true
+use_unsloth_gc: true
+
+### dataset
+#TODO: Your dataset_path here
+dataset_dir: None
+dataset: Prolog_final
+template: alpaca
+cutoff_len: 3000
+val_size: 0.1
+overwrite_cache: true
+preprocessing_num_workers: 4
+
+### output
+output_dir: outputs/qwen2.5-3b/lora/sft_prolog_full_data_epoch_6_rank32
+logging_steps: 10
+save_steps: 50 
+eval_steps: 50 
+evaluation_strategy: steps
+save_total_limit: 6
+plot_loss: true
+overwrite_output_dir: true
+
+### train
+per_device_train_batch_size: 16
+per_device_eval_batch_size: 1
+gradient_accumulation_steps: 8
+learning_rate: 3.0e-4
+num_train_epochs: 6.0
+lr_scheduler_type: cosine
+warmup_ratio: 0.1
+bf16: true
+ddp_timeout: 180000000
