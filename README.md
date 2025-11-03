@@ -25,17 +25,25 @@ This approach establishes a scalable and verifiable paradigm for automated symbo
 
 ---
 
-##  Environment Setup
+## 🛠️ Environment Setup
 
-First, set up the required Python environment using Conda and install dependencies:
+Clone the repository and set up the Python environment:
 
 <pre><code class="language-bash">
+# 1. Clone the repository
+git clone https://github.com/Tinyyhope/Prolog-MATH.git
+cd Prolog-MATH
+
+# 2. Create a conda environment
 conda create -n prolog-math python=3.10
 conda activate prolog-math
+
+# 3. Install dependencies
 pip install -r requirements.txt
 </code></pre>
 
 ---
+
 
 ## 🚀 How to Run
 
